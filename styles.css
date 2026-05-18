@@ -1,0 +1,1202 @@
+/* ============================================================
+   Larry's Gym — Main Stylesheet
+   CST 2309 Final Project | Wireframe Version
+   
+   Bikini Bottom's most beloved gym, brought to the web.
+   Built around an underwater aesthetic: deep blues, sandy
+   yellows, coral reds, and that famous SpongeBob shimmer.
+   ============================================================ */
+
+/* Google Fonts — Fredoka One is round & bubbly (perfect for
+   a gym that lives on the ocean floor), Nunito keeps body
+   text friendly and easy to read */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap');
+
+/* ---- CSS Variables (our color palette) ---- */
+:root {
+  --ocean-dark:    #041824;
+  --ocean-mid:     #0a3d62;
+  --ocean-blue:    #1a6fa8;
+  --ocean-glow:    #4eb3d3;
+  --ocean-surface: #0d5b8a;
+
+  /* Bubble effect colors — glassy, translucent */
+  --bubble-fill:   rgba(255, 255, 255, 0.07);
+  --bubble-border: rgba(150, 220, 255, 0.38);
+  --bubble-glow:   rgba(100, 200, 255, 0.28);
+
+  /* Sandy seafloor tones */
+  --sandy:         #f5d76e;
+  --sandy-dark:    #c9a227;
+
+  /* Larry's signature lobster red + coral accent */
+  --larry-red:     #c0392b;
+  --coral:         #e74c3c;
+  --coral-soft:    #ff8a65;
+
+  /* Kelp green for accents & progress bars */
+  --kelp:          #27ae60;
+  --kelp-light:    #2ecc71;
+
+  /* Jellyfish pink for the floating decorations */
+  --jelly-pink:    #ff69b4;
+
+  /* Text */
+  --text-light:    #e8f8ff;
+  --text-muted:    rgba(200, 230, 255, 0.72);
+
+  --nav-h: 68px;
+}
+
+/* ---- Reset ---- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ---- Base body — background.jpg is the SpongeBob underwater pattern ---- */
+body {
+  font-family: 'Nunito', sans-serif;
+  /* The background image tiles/covers the whole page */
+  background: url('images/background.jpg') center / cover fixed;
+  color: var(--text-light);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Dark blue overlay so the bright background doesn't fight the text.
+   Tinted blue to keep the underwater feel alive. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 22, 42, 0.68);
+  z-index: -3;
+}
+
+/* =============================================================
+   CAUSTIC LIGHT ("BACKWASH") OVERLAY
+   Toned down slightly since the background image already
+   provides the underwater atmosphere.
+   ============================================================= */
+.caustic-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+/* First layer — warm yellow caustic spots */
+.caustic-layer::before {
+  content: '';
+  position: absolute;
+  inset: -60%;
+  background-image:
+    radial-gradient(ellipse 90px 45px,  rgba(255, 255, 170, 0.12) 0%, transparent 65%),
+    radial-gradient(ellipse 55px 110px, rgba(255, 255, 170, 0.08) 0%, transparent 65%),
+    radial-gradient(ellipse 120px 60px, rgba(255, 255, 170, 0.10) 0%, transparent 65%),
+    radial-gradient(ellipse 70px 130px, rgba(255, 255, 170, 0.07) 0%, transparent 65%),
+    radial-gradient(ellipse 140px 55px, rgba(255, 255, 170, 0.09) 0%, transparent 65%),
+    radial-gradient(ellipse 50px 85px,  rgba(255, 255, 170, 0.08) 0%, transparent 65%),
+    radial-gradient(ellipse 100px 50px, rgba(255, 255, 170, 0.06) 0%, transparent 65%);
+  background-size:
+    290px 290px, 210px 370px, 370px 260px,
+    240px 340px, 310px 210px, 190px 300px, 260px 180px;
+  background-position:
+    8%  12%, 42% 28%, 74%  8%,
+    22% 58%, 62% 72%, 84% 42%, 50% 90%;
+  animation: causticDrift 16s ease-in-out infinite alternate;
+}
+
+/* Second layer — cool blue caustic spots (layered for depth) */
+.caustic-layer::after {
+  content: '';
+  position: absolute;
+  inset: -60%;
+  background-image:
+    radial-gradient(ellipse 75px 50px,  rgba(180, 240, 255, 0.07) 0%, transparent 65%),
+    radial-gradient(ellipse 60px 100px, rgba(180, 240, 255, 0.05) 0%, transparent 65%),
+    radial-gradient(ellipse 95px 60px,  rgba(180, 240, 255, 0.06) 0%, transparent 65%),
+    radial-gradient(ellipse 45px 90px,  rgba(180, 240, 255, 0.04) 0%, transparent 65%);
+  background-size: 260px 260px, 190px 320px, 340px 230px, 200px 290px;
+  background-position: 28% 18%, 64% 52%, 14% 68%, 78% 30%;
+  animation: causticDrift 11s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes causticDrift {
+  0%   { transform: translate(0,     0)    rotate(0deg);    }
+  20%  { transform: translate(-1.5%, 1.2%) rotate( 0.4deg); }
+  40%  { transform: translate( 1.2%,-1.8%) rotate(-0.3deg); }
+  60%  { transform: translate(-0.8%, 2.1%) rotate( 0.6deg); }
+  80%  { transform: translate( 1.8%,-0.9%) rotate(-0.5deg); }
+  100% { transform: translate(-1%,   1.5%) rotate( 0.3deg); }
+}
+
+/* =============================================================
+   JELLYFISH — floating background decorations
+   Each jellyfish rises from the bottom at a different speed
+   and horizontal position for a natural, scattered look.
+   ============================================================= */
+.jellyfish-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.jelly {
+  position: absolute;
+  bottom: -150px;
+  opacity: 0;
+  animation: jellyFloat linear infinite;
+}
+
+.jelly svg {
+  filter: drop-shadow(0 0 10px var(--jelly-pink));
+  animation: jellyPulse ease-in-out infinite;
+}
+
+/* Each jelly gets a unique speed/delay/position via inline style */
+@keyframes jellyFloat {
+  0%   { transform: translateY(0)    translateX(0);    opacity: 0;   }
+  5%   {                                               opacity: 0.65;}
+  25%  { transform: translateY(-25vh) translateX(18px);              }
+  50%  { transform: translateY(-50vh) translateX(-12px);             }
+  75%  { transform: translateY(-75vh) translateX(15px);              }
+  95%  {                                               opacity: 0.5; }
+  100% { transform: translateY(-110vh) translateX(0);  opacity: 0;   }
+}
+
+/* The bell of the jellyfish gently contracts */
+@keyframes jellyPulse {
+  0%, 100% { transform: scaleY(1);    }
+  50%       { transform: scaleY(0.88);}
+}
+
+/* ---- NAVIGATION ---- */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-h);
+  background: rgba(4, 24, 36, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--bubble-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2.5rem;
+  z-index: 200;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  text-decoration: none;
+  color: var(--sandy);
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.65rem;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 22px rgba(245, 215, 110, 0.5);
+}
+
+/* Larry the Lobster emoji bounces gently */
+.nav-lobster {
+  font-size: 1.9rem;
+  filter: drop-shadow(0 0 8px rgba(192, 57, 43, 0.6));
+  display: inline-block;
+  animation: lobsterBounce 3.5s ease-in-out infinite;
+}
+
+@keyframes lobsterBounce {
+  0%, 100% { transform: translateY(0)   rotate(-6deg); }
+  50%       { transform: translateY(-4px) rotate( 6deg); }
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.4rem;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 50px;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+  letter-spacing: 0.3px;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--text-light);
+  border-color: var(--bubble-border);
+  background: var(--bubble-fill);
+  box-shadow: 0 0 16px var(--bubble-glow);
+}
+
+/* ---- MAIN WRAPPER ---- */
+main {
+  position: relative;
+  z-index: 1;
+  padding-top: var(--nav-h);
+}
+
+/* ---- HERO SECTION ---- */
+.hero {
+  min-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 2rem 5rem;
+  position: relative;
+}
+
+.hero-eyebrow {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.15rem;
+  color: var(--ocean-glow);
+  letter-spacing: 2px;
+  margin-bottom: 0.75rem;
+  text-shadow: 0 0 20px rgba(78, 179, 211, 0.5);
+}
+
+.hero-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(3.8rem, 9vw, 7.5rem);
+  line-height: 0.95;
+  color: var(--sandy);
+  text-shadow:
+    0 0 50px rgba(245, 215, 110, 0.45),
+    4px  4px 0 rgba(201, 162, 39,  0.8),
+    8px  8px 0 rgba(140, 110, 15,  0.45),
+    12px 12px 0 rgba(80,  60,  5,  0.2);
+  margin-bottom: 1.2rem;
+  letter-spacing: 1px;
+}
+
+.hero-sub {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: var(--text-muted);
+  max-width: 580px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.85;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ---- BUTTONS ---- */
+.btn-primary {
+  display: inline-block;
+  padding: 0.9rem 2.4rem;
+  background: var(--coral);
+  color: #fff;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.15rem;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow:
+    0 0 22px rgba(231, 76, 60, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 10px 32px rgba(231, 76, 60, 0.55);
+  background: #e85c4a;
+}
+
+.btn-secondary {
+  display: inline-block;
+  padding: 0.85rem 2rem;
+  background: var(--bubble-fill);
+  color: var(--text-light);
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  text-decoration: none;
+  border: 2px solid var(--bubble-border);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(6px);
+}
+
+.btn-secondary:hover {
+  transform: translateY(-3px);
+  background: rgba(78, 179, 211, 0.14);
+  border-color: var(--ocean-glow);
+  box-shadow: 0 0 22px var(--bubble-glow);
+}
+
+/* ---- SECTIONS ---- */
+.page-section {
+  padding: 5rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.section-label {
+  font-family: 'Fredoka One', cursive;
+  font-size: 0.9rem;
+  color: var(--ocean-glow);
+  letter-spacing: 3px;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+  opacity: 0.8;
+}
+
+.section-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  color: var(--sandy);
+  text-align: center;
+  margin-bottom: 0.6rem;
+  text-shadow: 0 0 24px rgba(245, 215, 110, 0.3);
+}
+
+.section-desc {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 1rem;
+  max-width: 600px;
+  margin: 0 auto 3rem;
+  line-height: 1.75;
+}
+
+/* Wavy separator */
+.wave-sep {
+  text-align: center;
+  color: var(--bubble-border);
+  font-size: 1.4rem;
+  letter-spacing: 6px;
+  margin: 0 auto 1.5rem;
+  user-select: none;
+}
+
+/* ---- CARDS ---- */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.4rem;
+}
+
+.card {
+  background: var(--bubble-fill);
+  border: 1px solid var(--bubble-border);
+  border-radius: 20px;
+  padding: 2rem 1.75rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Decorative bubble in the corner of each card */
+.card::before {
+  content: '';
+  position: absolute;
+  top: -35px;
+  right: -35px;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 1px solid var(--bubble-border);
+  opacity: 0.45;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 1px solid var(--bubble-border);
+  opacity: 0.3;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(200, 240, 255, 0.55);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.3), 0 0 32px var(--bubble-glow);
+}
+
+.card-icon {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+  display: block;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+}
+
+.card h3 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.35rem;
+  color: var(--ocean-glow);
+  margin-bottom: 0.65rem;
+}
+
+.card p {
+  color: var(--text-muted);
+  line-height: 1.75;
+  font-size: 0.92rem;
+}
+
+/* ---- STAFF CARDS ---- */
+.staff-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1.4rem;
+}
+
+.staff-card {
+  background: var(--bubble-fill);
+  border: 1px solid var(--bubble-border);
+  border-radius: 20px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.staff-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+}
+
+.staff-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  background: rgba(10, 61, 98, 0.7);
+  border: 3px solid var(--larry-red);
+  box-shadow: 0 0 22px rgba(192, 57, 43, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.2rem;
+}
+
+.staff-card h3 {
+  font-family: 'Fredoka One', cursive;
+  color: var(--ocean-glow);
+  font-size: 1.25rem;
+  margin-bottom: 0.3rem;
+}
+
+.staff-role {
+  color: var(--sandy);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.staff-card p {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+/* ---- GALLERY PLACEHOLDERS ---- */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.2rem;
+}
+
+.gallery-item {
+  background: var(--bubble-fill);
+  border: 1px dashed var(--bubble-border);
+  border-radius: 16px;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+.gallery-item span:first-child { font-size: 3.5rem; }
+
+/* Gallery images are clickable to enlarge */
+.gallery-item img {
+  cursor: zoom-in;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.gallery-item img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Lightbox overlay */
+.lightbox-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+  padding: 2rem;
+}
+
+.lightbox-overlay.open { display: flex; }
+
+.lightbox-overlay img {
+  max-width: 90vw;
+  max-height: 88vh;
+  object-fit: contain;
+  border-radius: 14px;
+  box-shadow: 0 0 80px rgba(0, 0, 0, 0.8);
+  cursor: default;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.8rem;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 2.8rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.lightbox-close:hover { color: #fff; }
+
+/* ======================================================
+   REGISTRATION FORM — BIG BUBBLE + INNER BUBBLES
+   
+   The outer container is one large rounded bubble shape —
+   thick glassy border, shine highlight at the top, the 
+   whole thing. Inside it, every single field group sits in
+   its own smaller bubble. The label lives at the top of 
+   that inner bubble, and the input sits below it with just
+   a faint separator line. Hover/focus on a field-bubble 
+   makes it glow like bioluminescence.
+   ====================================================== */
+
+/* THE BIG CIRCULAR BUBBLE — the whole form lives inside a perfect circle.
+   Upsized so there's comfortable breathing room for all fields. */
+.form-bubble-wrap {
+  width: min(1000px, 94vw); /* Widened to ensure the oval has room for the content */
+  border-radius: 50%; /* This creates the perfect oval/ellipse when width and height differ */
+  overflow: hidden;
+  /* Increased horizontal padding so form fields and errors don't hit the curved edges */
+  padding: 7rem 15rem; 
+  background: rgba(8, 38, 68, 0.62);
+  border: 2.5px solid rgba(160, 230, 255, 0.52);
+  margin: 0 auto;
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  position: relative;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.45),
+    0 0 70px rgba(78, 179, 211, 0.14),
+    inset 0 4px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -4px 0 rgba(100, 200, 255, 0.09);
+}
+
+/* Adjusted the top-left glare to follow the new sweeping curve of the oval */
+.form-bubble-wrap::before {
+  content: '';
+  position: absolute;
+  top: 45px;
+  left: 100px;
+  width: 220px;
+  height: 70px;
+  background: radial-gradient(
+    ellipse,
+    rgba(255, 255, 255, 0.22) 0%,
+    transparent 68%
+  );
+  border-radius: 50%;
+  transform: rotate(-12deg);
+  pointer-events: none;
+}
+
+/* Adjusted the bottom-right glare for the oval */
+.form-bubble-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: 45px;
+  right: 100px;
+  width: 90px;
+  height: 40px;
+  background: radial-gradient(
+    ellipse,
+    rgba(100, 200, 255, 0.14) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+@keyframes bubbleFloat {
+  0%, 100% { transform: translateY(0) scale(1);    }
+  50%       { transform: translateY(-8px) scale(1.02); }
+}
+/* Form title area — compact so everything fits in the circle */
+.form-header {
+  margin-bottom: 1.2rem;
+  text-align: center;
+}
+
+.form-header h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.6rem;
+  color: var(--sandy);
+  text-shadow: 0 0 24px rgba(245, 215, 110, 0.3);
+  margin-bottom: 0.2rem;
+}
+
+.form-header p {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+/* ---- THE INNER FIELD ITEMS ---- */
+/* Each label + input pair. No wrapper bubble — the inputs
+   themselves are the circles now. */
+.form-field {
+  margin-bottom: 0.75rem;
+}
+
+.form-field label {
+  display: block;
+  font-weight: 700;
+  color: var(--ocean-glow);
+  font-size: 0.8rem;
+  letter-spacing: 0.3px;
+  margin-bottom: 0.28rem;
+  padding-left: 0.9rem;
+}
+
+/* Pill/circle inputs — each field is its own little bubble */
+.bubble-input,
+.bubble-select {
+  width: 100%;
+  padding: 0.62rem 1.2rem;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1.5px solid rgba(140, 215, 255, 0.38);
+  border-radius: 50px;   /* Full pill = circle bubble shape */
+  color: var(--text-light);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.92rem;
+  outline: none;
+  transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+}
+
+.bubble-input::placeholder {
+  color: rgba(180, 220, 255, 0.35);
+}
+
+.bubble-input:focus,
+.bubble-select:focus {
+  border-color: var(--ocean-glow);
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 0 20px rgba(78, 179, 211, 0.28), 0 0 0 3px rgba(78, 179, 211, 0.1);
+}
+
+.bubble-select {
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234eb3d3' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1.2rem center;
+  background-color: rgba(10, 55, 90, 0.7);
+  padding-right: 2.8rem;
+}
+
+.bubble-select option {
+  background: #0a3d62;
+  color: var(--text-light);
+}
+
+/* Textarea keeps rounded corners (can't be a full pill and still scroll) */
+.bubble-textarea {
+  width: 100%;
+  padding: 0.65rem 1.2rem;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1.5px solid rgba(140, 215, 255, 0.38);
+  border-radius: 22px;
+  color: var(--text-light);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.92rem;
+  resize: vertical;
+  min-height: 72px;
+  outline: none;
+  transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+}
+
+.bubble-textarea::placeholder { color: rgba(180, 220, 255, 0.35); }
+
+.bubble-textarea:focus {
+  border-color: var(--ocean-glow);
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 0 20px rgba(78, 179, 211, 0.28);
+}
+
+/* Focus is handled on each element above, not a wrapper */
+.bubble-input:focus, .bubble-select:focus, .bubble-textarea:focus { outline: none; }
+
+/* Two form-fields side-by-side */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+}
+
+/* Stale focus override removed — each element handles its own focus above */
+
+/* On narrow screens the circle becomes a tall pill and fields stack */
+@media (max-width: 800px) {
+  .form-bubble-wrap {
+    aspect-ratio: unset;
+    border-radius: 50px;
+    padding: 2.5rem 2rem;
+    width: min(500px, 92vw);
+  }
+  .form-row { grid-template-columns: 1fr; }
+}
+
+/* Error messages that pop in below a field */
+.field-error {
+  display: none;
+  color: #ff7675;
+  font-size: 0.83rem;
+  margin-top: 0.4rem;
+  padding-left: 1.2rem;
+  animation: errorSlide 0.25s ease;
+}
+
+.field-error.show {
+  display: block;
+}
+
+@keyframes errorSlide {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* The big form error summary banner */
+#form-errors {
+  display: none;
+  background: rgba(192, 57, 43, 0.2);
+  border: 1px solid rgba(231, 76, 60, 0.5);
+  border-radius: 16px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #ff9f9f;
+  font-size: 0.9rem;
+}
+
+#form-errors.show { display: block; }
+
+#form-errors ul {
+  padding-left: 1.2rem;
+  margin-top: 0.4rem;
+}
+
+#form-errors li { margin-bottom: 0.3rem; }
+
+/* Success message after submit */
+#form-success {
+  display: none;
+  background: rgba(39, 174, 96, 0.2);
+  border: 1px solid rgba(39, 174, 96, 0.5);
+  border-radius: 16px;
+  margin-top: 1rem;
+  padding: 3rem;
+  text-align: center;
+  color: var(--kelp-light);
+}
+
+#form-success.show { display: block; }
+
+#form-success h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+/* =====================================================
+   CREATIVITY PAGE — THE DEEP END
+   Styles for both the before/after comparison slider
+   and the animated progress tracker.
+   ===================================================== */
+
+/* ---- Before/After Comparison Slider ---- */
+.comparison-section {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.comparison-container {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 2px solid var(--bubble-border);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.45);
+  cursor: ew-resize;
+  user-select: none;
+  touch-action: none;
+  aspect-ratio: 3 / 4;   /* portrait — shows the full character height */
+  background: var(--ocean-mid);
+}
+
+/* BEFORE panel — full size background, always visible */
+.comparison-panel-before {
+  position: absolute;
+  inset: 0;
+}
+
+.comparison-panel-before img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  pointer-events: none;
+}
+
+/* AFTER panel — sits on top, from the LEFT edge.
+   Its width (set by JS) determines how much of the after image shows.
+   The image inside is always the full container width so it never squishes. */
+.comparison-panel-after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  overflow: hidden;
+  width: 50%;          /* JS updates this live */
+}
+
+.comparison-panel-after img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  pointer-events: none;
+  /* JS sets width = container's full pixel width so the image
+     never stretches or squishes as the panel resizes */
+}
+
+/* Labels pinned to left/right corners */
+.compare-label {
+  position: absolute;
+  top: 1.2rem;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  padding: 0.35rem 1.1rem;
+  border-radius: 50px;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.label-before {
+  right: 1.2rem;           /* before is on the right (uncovered) side */
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  color: rgba(200, 230, 255, 0.9);
+  border: 1px solid var(--bubble-border);
+}
+
+.label-after {
+  left: 1.2rem;            /* after is on the left (covered) side */
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  color: rgba(150, 255, 150, 0.9);
+  border: 1px solid rgba(100, 220, 100, 0.4);
+}
+
+/* The vertical divider line — no width, just centered on the handle position */
+.compare-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;               /* JS updates this */
+  width: 0;
+  transform: translateX(-50%);
+  z-index: 15;
+  pointer-events: none;
+}
+
+/* Visible line drawn with a pseudo-element so it's exactly 2px,
+   centered on the handle position */
+.compare-handle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -1px;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+}
+
+/* Circular drag handle centered on the divider line */
+.compare-grip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--ocean-mid);
+  letter-spacing: -1px;
+}
+
+/* ---- Animated Progress Bars ---- */
+.progress-container {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.progress-item {
+  margin-bottom: 2rem;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.55rem;
+}
+
+.progress-name {
+  font-weight: 700;
+  color: var(--text-light);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.progress-name span { font-size: 1.2rem; }
+
+.progress-stats {
+  font-family: 'Fredoka One', cursive;
+  font-size: 0.95rem;
+  color: var(--ocean-glow);
+}
+
+/* The track — the empty bar */
+.progress-track {
+  height: 20px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--bubble-border);
+  border-radius: 50px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* The fill — starts at 0 and grows when JS triggers it */
+.progress-fill {
+  height: 100%;
+  border-radius: 50px;
+  width: 0%;
+  transition: width 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shimmer that runs across the fill */
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.28) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2.2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(200%);  }
+}
+
+/* Color themes for different progress bars */
+.fill-coral    { background: linear-gradient(90deg, var(--larry-red), var(--coral)); }
+.fill-kelp     { background: linear-gradient(90deg, #1a8a45, var(--kelp-light)); }
+.fill-ocean    { background: linear-gradient(90deg, #1a6fa8, var(--ocean-glow)); }
+.fill-sandy    { background: linear-gradient(90deg, var(--sandy-dark), var(--sandy)); }
+.fill-jelly    { background: linear-gradient(90deg, #c254a0, var(--jelly-pink)); }
+
+/* Little badge showing the percentage */
+.progress-badge {
+  display: inline-block;
+  padding: 0.2rem 0.7rem;
+  border-radius: 50px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 0.75rem;
+  margin-left: 0.5rem;
+  background: var(--bubble-fill);
+  border: 1px solid var(--bubble-border);
+  color: var(--ocean-glow);
+}
+
+/* Restart button on the progress section */
+.restart-btn {
+  background: var(--bubble-fill);
+  border: 2px solid var(--bubble-border);
+  color: var(--ocean-glow);
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  padding: 0.6rem 1.8rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 1.5rem;
+}
+
+.restart-btn:hover {
+  border-color: var(--ocean-glow);
+  background: rgba(78, 179, 211, 0.12);
+  box-shadow: 0 0 18px var(--bubble-glow);
+}
+
+/* ---- Interactive goal controls ----
+   The editable current-value input + slider that live below each bar */
+.goal-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.55rem;
+}
+
+.goal-controls label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* The range slider sits between the label and the number box */
+.goal-slider {
+  flex: 1;
+  accent-color: var(--ocean-glow);
+  height: 4px;
+  cursor: pointer;
+}
+
+/* The little number box showing current value — user can type here too */
+.goal-number {
+  width: 58px;
+  padding: 0.25rem 0.5rem;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1.5px solid var(--bubble-border);
+  border-radius: 50px;
+  color: var(--sandy);
+  font-family: 'Fredoka One', cursive;
+  font-size: 0.88rem;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.goal-number:focus {
+  border-color: var(--ocean-glow);
+  box-shadow: 0 0 10px var(--bubble-glow);
+}
+
+/* Editable total — clicking the /total text lets you change the goal */
+.total-val {
+  cursor: pointer;
+  border-bottom: 1px dashed rgba(150, 220, 255, 0.4);
+  transition: border-color 0.2s;
+}
+.total-val:hover { border-color: var(--ocean-glow); }
+
+/* ---- FOOTER ---- */
+footer {
+  background: rgba(3, 12, 20, 0.88);
+  border-top: 1px solid var(--bubble-border);
+  padding: 2.5rem 2rem;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  margin-top: 4rem;
+}
+
+.footer-brand {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.5rem;
+  color: var(--sandy);
+  margin-bottom: 0.5rem;
+}
+
+footer p {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.8;
+}
+
+footer a {
+  color: var(--ocean-glow);
+  text-decoration: none;
+}
+
+footer a:hover { text-decoration: underline; }
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 768px) {
+  .navbar { padding: 0 1.25rem; }
+  .nav-links a { font-size: 0.58rem; padding: 0.4rem 0.75rem; }
+  .form-bubble-wrap { padding: 2rem 1.5rem; }
+  .form-row { grid-template-columns: 1fr; }
+  .hero-title { font-size: clamp(2.8rem, 12vw, 4.5rem); }
+}

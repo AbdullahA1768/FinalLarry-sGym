@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Larry's Gym — Bikini Bottom's #1 Fitness Center</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+
+
+  <!-- ===== LIGHTBOX ===== -->
+  <!-- Hidden overlay — clicking any gallery image opens it here -->
+  <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close enlarged image">&times;</button>
+    <img src="" alt="" id="lightbox-img">
+  </div>
+
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="navbar" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="Larry's Gym Home">
+      <span class="nav-lobster" aria-hidden="true">🦞</span>
+      Larry's Gym
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html" class="active" aria-current="page">About Us</a></li>
+      <li><a href="registration.html">Join the Crew</a></li>
+      <li><a href="creativity.html">The Deep End</a></li>
+    </ul>
+  </nav>
+
+
+  <main>
+
+    <!-- ===== HERO ===== -->
+    <!-- Hero uses OutsideView2.webp (the dramatic night shot of Larry's Gym building)
+         as its own background, layered over the page's background.jpg. -->
+    <section class="hero" aria-label="Hero banner" style="
+      background-image:
+        linear-gradient(180deg,
+          rgba(2, 22, 42, 0.45) 0%,
+          rgba(2, 22, 42, 0.65) 100%
+        ),
+        url('images/OutsideView2.webp');
+      background-size: cover;
+      background-position: center 40%;
+      background-repeat: no-repeat;
+    ">
+      <p class="hero-eyebrow">🌊 Bikini Bottom's Premier Fitness Center 🌊</p>
+      <h1 class="hero-title">LARRY'S GYM</h1>
+      <p class="hero-sub">
+        From sea star to sponge, Larry's Gym is where Bikini Bottom gets fit.
+        <strong>Every fish starts somewhere.</strong>
+      </p>
+      <div class="hero-buttons">
+        <a href="registration.html" class="btn-primary">Join the Crew 🦞</a>
+        <a href="#about" class="btn-secondary">Learn More</a>
+      </div>
+    </section>
+
+
+    <!-- ===== MISSION ===== -->
+    <section class="page-section" id="about" aria-label="Our mission">
+      <div class="wave-sep" aria-hidden="true">〰〰〰〰〰</div>
+      <p class="section-label">Who we are</p>
+      <h2 class="section-title">Our Mission</h2>
+      <p class="section-desc">Fitness is for every creature in Bikini Bottom, no exceptions.</p>
+
+      <div class="card-grid">
+        <article class="card">
+          <span class="card-icon" aria-hidden="true">💪</span>
+          <h3>Strength for All</h3>
+          <p>Our certified trainers meet you at your level. No judgment, just coaching and a whole lot of encouragement.</p>
+        </article>
+        <article class="card">
+          <span class="card-icon" aria-hidden="true">🌊</span>
+          <h3>Community First</h3>
+          <p>More than a gym, we are a community. Members range from Goo Lagoon regulars to first-timers from the deep trench.</p>
+        </article>
+        <article class="card">
+          <span class="card-icon" aria-hidden="true">🐠</span>
+          <h3>Ocean-Friendly</h3>
+          <p>Built with recycled coral and sustainable seafloor materials. We care about Bikini Bottom inside and out.</p>
+        </article>
+      </div>
+    </section>
+
+
+    <!-- ===== PROGRAMS ===== -->
+    <section class="page-section" id="programs" aria-label="Our programs">
+      <p class="section-label">What we offer</p>
+      <h2 class="section-title">Our Programs</h2>
+      <p class="section-desc">Something for every creature under the sea.</p>
+
+      <div class="card-grid">
+        <article class="card">
+          <span class="card-icon" aria-hidden="true">🪸</span>
+          <h3>Coral Cardio</h3>
+          <p>High-energy cardio that gets your fins moving fast. Tuesdays and Thursdays at 7am.</p>
+        </article>
+        <article class="card">
+          <span class="card-icon" aria-hidden="true">🏋️</span>
+          <h3>Kelp Strength</h3>
+          <p>Larry's signature weight program. Build muscle slowly, consistently, and with real determination.</p>
+        </article>
+        <article class="card">
+          <span class="card-icon" aria-hidden="true">🧘</span>
+          <h3>Deep Sea Yoga</h3>
+          <p>Gentle breathwork and balance on the ocean floor. No experience needed, just show up.</p>
+        </article>
+        <article class="card">
+          <span class="card-icon" aria-hidden="true">🏊</span>
+          <h3>Current Swim Club</h3>
+          <p>Open lap swimming every morning from 6am. Open water, open mind.</p>
+        </article>
+        <article class="card">
+          <span class="card-icon" aria-hidden="true">🥊</span>
+          <h3>Barnacle Boxing</h3>
+          <p>Footwork, jabs, and strength from the most experienced boxing coaches in Bikini Bottom.</p>
+        </article>
+      </div>
+    </section>
+
+
+    <!-- ===== STAFF ===== -->
+    <!-- Octavia Tentacle removed. Three staff members with real headshots. -->
+    <section class="page-section" id="staff" aria-label="Our team">
+      <p class="section-label">The crew</p>
+      <h2 class="section-title">Meet the Staff</h2>
+      <p class="section-desc">Passionate, certified, and slightly saltier than average.</p>
+
+      <div class="staff-grid">
+
+        <article class="staff-card">
+          <!-- larry_headshot.png: Larry the Lobster flexing -->
+          <div class="staff-avatar" style="
+            background-image: url('images/larry_headshot.png');
+            background-size: cover;
+            background-position: center top;
+            font-size: 0;" aria-hidden="true"></div>
+          <h3>Larry the Lobster</h3>
+          <p class="staff-role">Head Trainer &amp; Founder</p>
+          <p>The founder himself. Been building muscle and character since before Goo Lagoon was cool.</p>
+        </article>
+
+        <article class="staff-card">
+          <!-- dophin.png: Dash Dolphin, the muscular dolphin character -->
+          <div class="staff-avatar" style="
+            background-image: url('images/dophin.png');
+            background-size: cover;
+            background-position: center top;
+            font-size: 0;" aria-hidden="true"></div>
+          <h3>Dash Dolphin</h3>
+          <p class="staff-role">Cardio Specialist</p>
+          <p>Former competitive swimmer turned fitness fanatic. His Coral Cardio class fills up every single week.</p>
+        </article>
+
+        <article class="staff-card">
+          <!-- Shark.webp: Sam Sharkbite flexing -->
+          <div class="staff-avatar" style="
+            background-image: url('images/Shark.webp');
+            background-size: cover;
+            background-position: center top;
+            font-size: 0;" aria-hidden="true"></div>
+          <h3>Sam "Sharkbite" Finley</h3>
+          <p class="staff-role">Strength &amp; Conditioning</p>
+          <p>Don't let the teeth fool you. Sam is the gentlest and strongest coach you will ever meet.</p>
+        </article>
+
+      </div>
+    </section>
+
+
+    <!-- ===== GALLERY ===== -->
+    <!-- Click any image to open it in the lightbox -->
+    <section class="page-section" id="gallery" aria-label="Photo gallery">
+      <p class="section-label">Life at Larry's</p>
+      <h2 class="section-title">A Peek Inside</h2>
+      <p class="section-desc">Click any photo to enlarge it.</p>
+
+      <div class="gallery-grid">
+
+        <div class="gallery-item" style="padding:0; overflow:hidden; min-height:200px;">
+          <img src="images/maingymfloor.png"
+            alt="The main gym floor at Larry's Gym"
+            class="gallery-real-img"
+            style="width:100%; height:200px; object-fit:cover; border-radius:16px; display:block;">
+        </div>
+
+        <div class="gallery-item" style="padding:0; overflow:hidden; min-height:200px;">
+          <img src="images/benchpressandbike.png"
+            alt="Members bench pressing and cycling"
+            class="gallery-real-img"
+            style="width:100%; height:200px; object-fit:cover; border-radius:16px; display:block;">
+        </div>
+
+        <div class="gallery-item" style="padding:0; overflow:hidden; min-height:200px;">
+          <img src="images/cardioclass.png"
+            alt="Coral Cardio class in full swing"
+            class="gallery-real-img"
+            style="width:100%; height:200px; object-fit:cover; border-radius:16px; display:block;">
+        </div>
+
+        <div class="gallery-item" style="padding:0; overflow:hidden; min-height:200px;">
+          <img src="images/outdoorarea.png"
+            alt="Outdoor workout area at Larry's Gym"
+            class="gallery-real-img"
+            style="width:100%; height:200px; object-fit:cover; border-radius:16px; display:block;">
+        </div>
+
+        <div class="gallery-item" style="padding:0; overflow:hidden; min-height:200px;">
+          <img src="images/OutsideView.webp"
+            alt="Larry's Gym grand opening — the whole town showed up"
+            class="gallery-real-img"
+            style="width:100%; height:200px; object-fit:cover; border-radius:16px; display:block;">
+        </div>
+
+        <!-- larryartwork.png: the iconic No Slacking poster as the achievement wall -->
+        <div class="gallery-item" style="padding:0; overflow:hidden; min-height:200px;">
+          <img src="images/larryartwork.png"
+            alt="Larry's Gym Member Achievement Wall — No Slacking!"
+            class="gallery-real-img"
+            style="width:100%; height:200px; object-fit:cover; object-position:center top; border-radius:16px; display:block;">
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p class="footer-brand">🦞 Larry's Gym</p>
+    <p>123 Coral Road, Bikini Bottom, Pacific Ocean &nbsp;·&nbsp;
+       <a href="mailto:larry@larrysgym.bb">larry@larrysgym.bb</a>
+    </p>
+    <p style="margin-top: 0.4rem;">© 2026 Larry's Gym. All rights reserved. 🌊</p>
+  </footer>
+
+
+  <!-- ===== LIGHTBOX SCRIPT ===== -->
+  <script>
+    // Grab the overlay and its child elements
+    var overlay    = document.getElementById("lightbox");
+    var lightImg   = document.getElementById("lightbox-img");
+    var closeBtn   = document.getElementById("lightbox-close");
+
+    // Wire up every gallery image to open the lightbox on click
+    var galleryImgs = document.querySelectorAll(".gallery-real-img");
+    for (var i = 0; i < galleryImgs.length; i++) {
+      galleryImgs[i].addEventListener("click", function () {
+        lightImg.src = this.src;
+        lightImg.alt = this.alt;
+        overlay.classList.add("open");
+        document.body.style.overflow = "hidden"; // stop background scroll
+      });
+    }
+
+    // Close when clicking the overlay background or the X button
+    overlay.addEventListener("click", function (e) {
+      if (e.target === overlay || e.target === closeBtn) {
+        overlay.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+    });
+
+    // Also close on Escape key
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        overlay.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+    });
+  </script>
+
+
+</body>
+</html>

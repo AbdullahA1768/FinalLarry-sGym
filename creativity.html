@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Deep End: Larry's Gym</title>
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- A couple of extra styles that only apply to this page -->
+  <style>
+    /* Workout-of-the-day card that pops in */
+    .wod-card {
+      background: var(--bubble-fill);
+      border: 1px solid var(--bubble-border);
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      max-width: 500px;
+      margin: 0 auto;
+      transition: all 0.4s ease;
+    }
+
+    .wod-exercise {
+      font-family: 'Fredoka One', cursive;
+      font-size: 2rem;
+      color: var(--sandy);
+      margin: 1rem 0 0.5rem;
+      text-shadow: 0 0 20px rgba(245,215,110,0.3);
+    }
+
+    .wod-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .wod-reps {
+      display: inline-block;
+      margin-top: 0.75rem;
+      padding: 0.4rem 1.4rem;
+      border-radius: 50px;
+      background: rgba(192,57,43,0.2);
+      border: 1px solid rgba(231,76,60,0.4);
+      color: var(--coral-soft);
+      font-family: 'Fredoka One', cursive;
+      font-size: 1rem;
+    }
+
+    /* Spinning Larry loader for the WOD reveal */
+    .wod-loader {
+      font-size: 3rem;
+      animation: lobsterSpin 0.8s linear;
+    }
+
+    @keyframes lobsterSpin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* Drag instruction text below the slider */
+    .drag-hint {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      margin-top: 1rem;
+    }
+
+    /* Section divider between the two features */
+    .feature-divider {
+      border: none;
+      border-top: 1px solid var(--bubble-border);
+      margin: 4rem auto;
+      max-width: 600px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Caustic backwash overlay - same on every page -->
+  <div class="caustic-layer" aria-hidden="true"></div>
+
+  <!-- More jellyfish on the creativity page - it's the fun page, after all -->
+  <div class="jellyfish-container" aria-hidden="true">
+
+    <div class="jelly" style="left: 5%; animation-duration: 17s; animation-delay: 1s;">
+      <svg width="48" height="76" viewBox="0 0 48 76" fill="none">
+        <ellipse cx="24" cy="22" rx="21" ry="21" fill="rgba(255,105,180,0.25)" stroke="rgba(255,150,210,0.4)" stroke-width="1.2"/>
+        <ellipse cx="17" cy="14" rx="8" ry="6" fill="rgba(255,180,220,0.16)" transform="rotate(-15 17 14)"/>
+        <path d="M12 41 Q9  54 11 68" stroke="rgba(255,105,180,0.5)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <path d="M17 43 Q14 57 16 73" stroke="rgba(255,130,200,0.4)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <path d="M24 44 Q24 58 24 74" stroke="rgba(255,105,180,0.5)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <path d="M31 43 Q34 57 32 73" stroke="rgba(255,130,200,0.4)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <path d="M36 41 Q39 54 37 68" stroke="rgba(255,105,180,0.5)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <div class="jelly" style="left: 55%; animation-duration: 13s; animation-delay: 5s;">
+      <svg width="66" height="104" viewBox="0 0 66 104" fill="none">
+        <ellipse cx="33" cy="30" rx="30" ry="30" fill="rgba(100,180,255,0.2)" stroke="rgba(140,200,255,0.35)" stroke-width="1.5"/>
+        <ellipse cx="23" cy="20" rx="12" ry="9" fill="rgba(180,220,255,0.12)" transform="rotate(-15 23 20)"/>
+        <path d="M16 58 Q12 75 14 95"  stroke="rgba(100,180,255,0.45)" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+        <path d="M24 61 Q20 79 22 100" stroke="rgba(120,195,255,0.38)" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+        <path d="M33 62 Q33 80 33 102" stroke="rgba(100,180,255,0.45)" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+        <path d="M42 61 Q46 79 44 100" stroke="rgba(120,195,255,0.38)" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+        <path d="M50 58 Q54 75 52 95"  stroke="rgba(100,180,255,0.45)" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <div class="jelly" style="left: 82%; animation-duration: 19s; animation-delay: 9s;">
+      <svg width="40" height="62" viewBox="0 0 40 62" fill="none">
+        <ellipse cx="20" cy="18" rx="18" ry="18" fill="rgba(180,120,255,0.22)" stroke="rgba(200,150,255,0.38)" stroke-width="1"/>
+        <path d="M10 34 Q7  45 9  58"  stroke="rgba(180,120,255,0.48)" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M15 36 Q12 48 14 61" stroke="rgba(195,140,255,0.4)" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M20 37 Q20 49 20 62" stroke="rgba(180,120,255,0.48)" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M25 36 Q28 48 26 61" stroke="rgba(195,140,255,0.4)" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M30 34 Q33 45 31 58" stroke="rgba(180,120,255,0.48)" stroke-width="1" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <div class="jelly" style="left: 28%; animation-duration: 22s; animation-delay: 14s;">
+      <svg width="32" height="50" viewBox="0 0 32 50" fill="none">
+        <ellipse cx="16" cy="14" rx="14" ry="14" fill="rgba(255,160,80,0.18)" stroke="rgba(255,190,120,0.32)" stroke-width="1"/>
+        <path d="M8  27 Q6  36 7  46"  stroke="rgba(255,160,80,0.42)" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M12 28 Q10 38 12 48" stroke="rgba(255,175,100,0.35)" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M16 29 Q16 39 16 49" stroke="rgba(255,160,80,0.42)" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M20 28 Q22 38 20 48" stroke="rgba(255,175,100,0.35)" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M24 27 Q26 36 25 46" stroke="rgba(255,160,80,0.42)" stroke-width="1" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+  </div>
+
+
+  <!-- ===== NAVIGATION ===== -->
+  <!-- "The Deep End" is the active page -->
+  <nav class="navbar" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="Larry's Gym Home">
+      <span class="nav-lobster" aria-hidden="true">🦞</span>
+      Larry's Gym
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html">About Us</a></li>
+      <li><a href="registration.html">Join the Crew</a></li>
+      <li><a href="creativity.html" class="active" aria-current="page">The Deep End</a></li>
+    </ul>
+  </nav>
+
+
+  <main>
+
+    <!-- Page header -->
+    <section class="page-section" style="padding-bottom: 1rem; text-align: center;">
+      
+      <h1 class="section-title" style="font-size: clamp(2.4rem, 6vw, 4rem);">
+        The Deep End
+      </h1>
+      <p class="section-desc">
+        This is where things get a little more interesting. Drag sliders, 
+        watch progress bars fill up, and feel the motivation ripple through you 
+        like a current through Goo Lagoon.
+      </p>
+    </section>
+
+
+    <!-- =====================================================
+         FEATURE 1: BEFORE & AFTER COMPARISON SLIDER
+         
+         A draggable divider splits the view between a "before"
+         image (out-of-shape fish) and an "after" image (ripped 
+         fish post-Larry's-Gym). The user drags the handle to 
+         reveal more of one side or the other.
+         
+         JavaScript handles: mousedown/touchstart events on the 
+         container, calculating the cursor X position as a percent 
+         of container width, and updating the clip-path on the 
+         "after" panel in real time.
+         ===================================================== -->
+    <section class="page-section" style="padding-top: 1rem;">
+      <div class="comparison-section" aria-label="Before and after comparison slider">
+
+        
+        <h2 class="section-title">The Larry's Gym Glow-Up</h2>
+        <p class="section-desc">
+          Drag the handle left or right to compare life before and after 
+          joining Larry's Gym. The difference speaks for itself.
+        </p>
+
+        <!-- The comparison container - JS listens to mouse/touch events on this -->
+        <div class="comparison-container" id="comparison-container"
+          role="img"
+          aria-label="Before and after gym transformation. Drag the handle to compare">
+
+          <!-- BEFORE - full background, always visible underneath the after panel -->
+          <div class="comparison-panel-before">
+            <img src="images/before.png"
+              alt="SpongeBob before joining Larry's Gym"
+              draggable="false">
+          </div>
+
+          <!-- AFTER - overlays from the left; JS adjusts its width and the img's
+               pixel width to the container's full width so it never squishes -->
+          <div class="comparison-panel-after" id="panel-after">
+            <img src="images/after.png"
+              id="after-img"
+              alt="SpongeBob after 3 months at Larry's Gym"
+              draggable="false">
+          </div>
+
+          <!-- Labels: after=left (revealed side), before=right (hidden side) -->
+          <span class="compare-label label-after"  aria-hidden="true">After 💪</span>
+          <span class="compare-label label-before" aria-hidden="true">Before 📉</span>
+
+          <!-- Zero-width handle div - the visible line and circle come from
+               ::before and the child .compare-grip respectively -->
+          <div class="compare-handle" id="compare-handle" aria-hidden="true">
+            <div class="compare-grip">⟺</div>
+          </div>
+
+        </div><!-- end .comparison-container -->
+
+        <p class="drag-hint" aria-hidden="true">
+          ← Drag the handle to compare →
+        </p>
+
+      </div>
+    </section>
+
+
+    <hr class="feature-divider" aria-hidden="true">
+
+
+    <!-- =====================================================
+         FEATURE 2: ANIMATED PROGRESS TRACKER
+         
+         A set of goal-tracking progress bars that animate in 
+         when the user scrolls them into view (IntersectionObserver).
+         
+         Each bar represents a monthly fitness goal for a 
+         fictional gym member. The fill transitions from 0% to 
+         the target percentage using CSS transitions triggered 
+         by a JS class toggle.
+         
+         There's also a "Reset & Replay" button that clears the 
+         bars back to 0 and re-triggers the animation - this is 
+         required to demonstrate DOM manipulation and loops.
+         ===================================================== -->
+    <section class="page-section" style="padding-top: 1rem;">
+
+      
+      <h2 class="section-title">Monthly Goal Tracker</h2>
+      <p class="section-desc">
+        Every Larry's Gym member tracks their monthly goals. Here's how 
+        the crew is doing this month. The bars animate in as you scroll - 
+        hit Reset to watch them go again.
+      </p>
+
+      <!-- JS builds all the progress items dynamically from the goals array
+           in creativity.js. Each item gets a bar, a slider, and a number input.
+           We just need an empty container and the reset button here. -->
+      <div class="progress-container" id="progress-container">
+        <!-- Items injected here by creativity.js -->
+
+        <div style="text-align: center; margin-top: 1rem;">
+          <button class="restart-btn" id="reset-progress"
+            aria-label="Reset all goals to zero and replay the animation">
+            🔄 Reset &amp; Replay
+          </button>
+        </div>
+
+      </div><!-- end .progress-container -->
+
+    </section>
+
+
+    <!-- A little call-to-action at the bottom of the fun page -->
+    <section class="page-section" style="text-align: center; padding-top: 2rem;">
+      <p style="font-size: 1.8rem; margin-bottom: 0.8rem;" aria-hidden="true">🦞💪🌊</p>
+      <h2 class="section-title">Ready to Start Your Own Glow-Up?</h2>
+      <p class="section-desc">
+        The progress bars above could be yours. Larry is waiting, and Larry does not wait for anyone.
+      </p>
+      <a href="registration.html" class="btn-primary">Join the Crew Today</a>
+    </section>
+
+  </main>
+
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p class="footer-brand">🦞 Larry's Gym</p>
+    <p>123 Coral Road, Bikini Bottom, Pacific Ocean &nbsp;·&nbsp;
+       <a href="mailto:larry@larrysgym.bb">larry@larrysgym.bb</a>
+    </p>
+    <p style="margin-top: 0.4rem;">© 2026 Larry's Gym. All rights reserved. 🌊</p>
+  </footer>
+
+  <!-- External script handles the comparison slider and progress bars -->
+  <script src="creativity.js"></script>
+
+</body>
+</html>

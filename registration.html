@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join the Crew — Larry's Gym</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="caustic-layer" aria-hidden="true"></div>
+
+  <div class="jellyfish-container" aria-hidden="true">
+    <div class="jelly" style="left: 4%; animation-duration: 20s; animation-delay: 3s;">
+      <svg width="38" height="60" viewBox="0 0 38 60" fill="none">
+        <ellipse cx="19" cy="17" rx="17" ry="17" fill="rgba(255,105,180,0.22)" stroke="rgba(255,150,210,0.38)" stroke-width="1"/>
+        <path d="M10 32 Q8  44 9  56"  stroke="rgba(255,105,180,0.45)" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M14 34 Q12 47 14 58" stroke="rgba(255,130,200,0.38)" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M19 35 Q19 48 19 59" stroke="rgba(255,105,180,0.45)" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M24 34 Q26 47 24 58" stroke="rgba(255,130,200,0.38)" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M28 32 Q30 44 29 56" stroke="rgba(255,105,180,0.45)" stroke-width="1" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="jelly" style="left: 88%; animation-duration: 16s; animation-delay: 8s;">
+      <svg width="52" height="82" viewBox="0 0 52 82" fill="none">
+        <ellipse cx="26" cy="23" rx="23" ry="23" fill="rgba(180,140,255,0.2)" stroke="rgba(200,170,255,0.35)" stroke-width="1.2"/>
+        <path d="M12 44 Q9  58 11 74"  stroke="rgba(180,140,255,0.45)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <path d="M18 47 Q15 62 17 78"  stroke="rgba(190,155,255,0.38)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <path d="M26 48 Q26 63 26 80"  stroke="rgba(180,140,255,0.45)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <path d="M34 47 Q37 62 35 78"  stroke="rgba(190,155,255,0.38)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <path d="M40 44 Q43 58 41 74"  stroke="rgba(180,140,255,0.45)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <nav class="navbar" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="Larry's Gym Home">
+      <span class="nav-lobster" aria-hidden="true">🦞</span>
+      Larry's Gym
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html">About Us</a></li>
+      <li><a href="registration.html" class="active" aria-current="page">Join the Crew</a></li>
+      <li><a href="creativity.html">The Deep End</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <section class="page-section" style="padding-bottom: 0; text-align: center;">
+      <p class="hero-eyebrow" style="margin-top: 2rem;">🫧 Welcome, future member 🫧</p>
+      <h1 class="section-title" style="font-size: clamp(2.2rem, 5vw, 3.5rem);">Join the Crew</h1>
+      <p class="section-desc">Fill out the form below and you will be swimming laps with Larry in no time.</p>
+    </section>
+
+
+    <!-- ===== THE BIG CIRCLE FORM =====
+         .form-bubble-wrap = the large circular outer bubble.
+         Inside it, each form-field has its own pill-shaped input.
+    -->
+    <section class="page-section" style="padding-top: 2rem;">
+
+      <div class="form-bubble-wrap" id="main-form-wrap">
+
+        <!-- Error banner — JS populates and reveals this on bad submit -->
+        <div id="form-errors" role="alert" aria-live="polite">
+          <strong>🐠 A few things need fixing:</strong>
+          <ul id="error-list"></ul>
+        </div>
+
+        <!-- Success state replaces the form after a clean submit -->
+        <div id="form-success" role="status" aria-live="polite">
+          <div style="font-size: 4rem; margin-bottom: 1rem;">🦞</div>
+          <h2>Welcome to the Crew!</h2>
+          <p style="color: var(--text-muted); margin-top: 0.5rem;">
+            Larry is pumped to have you. Check your email soon, then it is time to get swole.
+          </p>
+        </div>
+
+        <form id="registration-form" novalidate aria-label="Gym membership registration">
+
+          <div class="form-header">
+            <h2>Membership Registration</h2>
+            <p>All fields are required. Larry does not cut corners, and neither should you.</p>
+          </div>
+
+          <!-- Row 1: Name + Age -->
+          <div class="form-row">
+            <div class="form-field">
+              <label for="full-name">Full Name</label>
+              <input type="text" id="full-name" name="full_name"
+                class="bubble-input" placeholder="e.g. SpongeBob SquarePants"
+                autocomplete="name">
+              <span class="field-error" id="error-full-name" role="alert"></span>
+            </div>
+            <div class="form-field">
+              <label for="age">Age</label>
+              <input type="number" id="age" name="age"
+                class="bubble-input" placeholder="13 to 120"
+                min="13" max="120">
+              <span class="field-error" id="error-age" role="alert"></span>
+            </div>
+          </div>
+
+          <!-- Row 2: Email + Phone -->
+          <div class="form-row">
+            <div class="form-field">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email"
+                class="bubble-input" placeholder="e.g. larry@bikinibottom.bb"
+                autocomplete="email">
+              <span class="field-error" id="error-email" role="alert"></span>
+            </div>
+            <div class="form-field">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone"
+                class="bubble-input" placeholder="e.g. (555) 867-5309"
+                autocomplete="tel">
+              <span class="field-error" id="error-phone" role="alert"></span>
+            </div>
+          </div>
+
+          <!-- Membership Type -->
+          <div class="form-field">
+            <label for="membership-type">Membership Type</label>
+            <select id="membership-type" name="membership_type" class="bubble-select">
+              <option value="">Choose your plan</option>
+              <option value="monthly">Monthly Pass: 29 clams/month</option>
+              <option value="3month">3-Month Bundle: 79 clams</option>
+              <option value="annual">Annual Membership: 275 clams (best value)</option>
+              <option value="student">Student Discount: 18 clams/month (kelp ID required)</option>
+              <option value="family">Family Plan: 55 clams/month (up to 5 sea creatures)</option>
+            </select>
+            <span class="field-error" id="error-membership-type" role="alert"></span>
+          </div>
+
+          <!-- Fitness Goals -->
+          <div class="form-field">
+            <label for="fitness-goals">Fitness Goals</label>
+            <textarea id="fitness-goals" name="fitness_goals"
+              class="bubble-textarea" rows="3"
+              placeholder="Tell Larry what you are working toward. He genuinely wants to know...">
+            </textarea>
+            <span class="field-error" id="error-fitness-goals" role="alert"></span>
+          </div>
+
+          <!-- Row 3: Two extra fields -->
+          <div class="form-row">
+            <div class="form-field">
+              <label for="experience">Experience Level</label>
+              <select id="experience" name="experience" class="bubble-select">
+                <option value="">How new are you to this?</option>
+                <option value="newbie">Newbie: Just washed ashore</option>
+                <option value="beginner">Beginner: Done it a few times</option>
+                <option value="intermediate">Intermediate: Know my way around a weight rack</option>
+                <option value="advanced">Advanced: Larry might learn from me</option>
+              </select>
+              <span class="field-error" id="error-experience" role="alert"></span>
+            </div>
+            <div class="form-field">
+              <label for="heard-about">How Did You Hear About Us?</label>
+              <select id="heard-about" name="heard_about" class="bubble-select">
+                <option value="">How did you find us?</option>
+                <option value="friend">A friend</option>
+                <option value="goo-lagoon">Goo Lagoon bulletin board</option>
+                <option value="krusty-krab">Flyer at the Krusty Krab</option>
+                <option value="social">Social media (BikiniGram)</option>
+                <option value="spongebob">SpongeBob told me</option>
+                <option value="other">Other</option>
+              </select>
+              <span class="field-error" id="error-heard-about" role="alert"></span>
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <div style="text-align: center; margin-top: 1.5rem;">
+            <button type="submit" class="btn-primary"
+              style="font-size: 1.15rem; padding: 0.9rem 2.8rem;">
+              🦞 Sign Me Up, Larry!
+            </button>
+          
+          </div>
+
+        </form>
+
+      </div>
+
+    </section>
+
+    <!-- Perks below the form -->
+    <section class="page-section" style="padding-top: 3rem;">
+      <h2 class="section-title">What You Get</h2>
+      <p class="section-desc">Every membership includes these perks with no hidden fees.</p>
+      <div class="card-grid">
+        <article class="card">
+          <span class="card-icon" aria-hidden="true">🎟️</span>
+          <h3>Unlimited Classes</h3>
+          <p>All weekly classes included. Mix and match however you like.</p>
+        </article>
+        <article class="card">
+          <span class="card-icon" aria-hidden="true">🤿</span>
+          <h3>Gear Locker Access</h3>
+          <p>Secure lockers, towels, and a bubble pool for post-workout recovery.</p>
+        </article>
+        <article class="card">
+          <span class="card-icon" aria-hidden="true">📋</span>
+          <h3>Progress Tracking</h3>
+          <p>A custom goal card per member. Larry reviews them every month personally.</p>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p class="footer-brand">🦞 Larry's Gym</p>
+    <p>123 Coral Road, Bikini Bottom &nbsp;·&nbsp;
+       <a href="mailto:larry@larrysgym.bb">larry@larrysgym.bb</a></p>
+    <p style="margin-top: 0.4rem;">© 2026 Larry's Gym. All rights reserved. 🌊</p>
+  </footer>
+
+  <script src="validation.js"></script>
+</body>
+</html>
