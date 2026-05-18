@@ -76,64 +76,7 @@ body::before {
   z-index: -3;
 }
 
-/* =============================================================
-   CAUSTIC LIGHT ("BACKWASH") OVERLAY
-   Toned down slightly since the background image already
-   provides the underwater atmosphere.
-   ============================================================= */
-.caustic-layer {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-  overflow: hidden;
-}
 
-/* First layer — warm yellow caustic spots */
-.caustic-layer::before {
-  content: '';
-  position: absolute;
-  inset: -60%;
-  background-image:
-    radial-gradient(ellipse 90px 45px,  rgba(255, 255, 170, 0.12) 0%, transparent 65%),
-    radial-gradient(ellipse 55px 110px, rgba(255, 255, 170, 0.08) 0%, transparent 65%),
-    radial-gradient(ellipse 120px 60px, rgba(255, 255, 170, 0.10) 0%, transparent 65%),
-    radial-gradient(ellipse 70px 130px, rgba(255, 255, 170, 0.07) 0%, transparent 65%),
-    radial-gradient(ellipse 140px 55px, rgba(255, 255, 170, 0.09) 0%, transparent 65%),
-    radial-gradient(ellipse 50px 85px,  rgba(255, 255, 170, 0.08) 0%, transparent 65%),
-    radial-gradient(ellipse 100px 50px, rgba(255, 255, 170, 0.06) 0%, transparent 65%);
-  background-size:
-    290px 290px, 210px 370px, 370px 260px,
-    240px 340px, 310px 210px, 190px 300px, 260px 180px;
-  background-position:
-    8%  12%, 42% 28%, 74%  8%,
-    22% 58%, 62% 72%, 84% 42%, 50% 90%;
-  animation: causticDrift 16s ease-in-out infinite alternate;
-}
-
-/* Second layer — cool blue caustic spots (layered for depth) */
-.caustic-layer::after {
-  content: '';
-  position: absolute;
-  inset: -60%;
-  background-image:
-    radial-gradient(ellipse 75px 50px,  rgba(180, 240, 255, 0.07) 0%, transparent 65%),
-    radial-gradient(ellipse 60px 100px, rgba(180, 240, 255, 0.05) 0%, transparent 65%),
-    radial-gradient(ellipse 95px 60px,  rgba(180, 240, 255, 0.06) 0%, transparent 65%),
-    radial-gradient(ellipse 45px 90px,  rgba(180, 240, 255, 0.04) 0%, transparent 65%);
-  background-size: 260px 260px, 190px 320px, 340px 230px, 200px 290px;
-  background-position: 28% 18%, 64% 52%, 14% 68%, 78% 30%;
-  animation: causticDrift 11s ease-in-out infinite alternate-reverse;
-}
-
-@keyframes causticDrift {
-  0%   { transform: translate(0,     0)    rotate(0deg);    }
-  20%  { transform: translate(-1.5%, 1.2%) rotate( 0.4deg); }
-  40%  { transform: translate( 1.2%,-1.8%) rotate(-0.3deg); }
-  60%  { transform: translate(-0.8%, 2.1%) rotate( 0.6deg); }
-  80%  { transform: translate( 1.8%,-0.9%) rotate(-0.5deg); }
-  100% { transform: translate(-1%,   1.5%) rotate( 0.3deg); }
-}
 
 /* =============================================================
    JELLYFISH — floating background decorations
